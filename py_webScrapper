@@ -1,0 +1,28 @@
+
+import requests
+from bs4 import BeautifulSoup
+
+#proxies={'http': 'http://user:password@proxy.oxylabs.io'}
+#response = requests.get('http://httpbin.org/ip', proxies=proxies)
+#print(response.text)
+
+form_data = {'key1': 'value1', 'key2': 'value2'}
+response = requests.post("https://oxylabs.io/ ", data=form_data)
+print(response.text)
+
+print("Break")
+
+soup = BeautifulSoup(response.text, 'html.parser')
+print(soup.title)
+
+
+blog_titles = soup.findAll('h2', attrs={"class":"blog-card__content-title"})
+for title in blog_titles:
+    print(title.text)
+# Output:
+# Prints all blog tiles on the page
+
+
+blog_titles = soup.select('h2.blog-card__content-title')
+for title in blog_titles:
+    print(title.text)
